@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# No Unpleasant Notes
 
-## Getting Started
+A small **music listening lab**, not a drill app: random patterns on a **grand staff** (treble + bass), rendered with **VexFlow** and played with **Tone.js**. Optional **modern house-style** groove shares the transport clock with the phrase so what you see and hear stay aligned.
 
-First, run the development server:
+Part of [Race Li](https://race.li)’s playground of interactive / audio experiments.
+
+## What it does
+
+- **Random phrases** — Tap **New** for another idea: single notes, **chords**, dense **arpeggios**, or short **motifs**. Arps/motifs use a **16th / 32nd / 64th** subdivision grid so each roll feels different.
+- **2/4 notation** — Patterns are written as a single 2/4 bar; with groove on, the figure can repeat on a **4/4** drum grid (two phrases per drum bar).
+- **Playback** — **Play** / **Stop**; **New** stops, swaps the phrase, and resumes if audio was running (clean scheduling / no stuck notes).
+- **Groove** — Toggle **4/4** synth drums (four-on-the-floor kick, snare/clap on 2 & 4, 16th hats). Muting follows Play/Stop.
+
+## Stack
+
+| Piece        | Role                                      |
+| ------------ | ----------------------------------------- |
+| **Next.js**  | App shell, React 19                       |
+| **VexFlow**  | Grand staff, beaming, EasyScore strings   |
+| **Tone.js**  | PolySynth melody, FM/noise/metal drums    |
+| **Tailwind** | Layout & theme                            |
+
+Phrase logic and EasyScore generation live in **`lib/phrase.ts`**. Staff UI and audio wiring are in **`components/TrainerApp.tsx`**.
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). The first click to start audio may require a user gesture (browser policy).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build   # production build
+npm start       # serve production build
+npm run lint    # eslint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Repo
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<https://github.com/DocRace/no-unpleasant-notes>
