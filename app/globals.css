@@ -1,5 +1,30 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Bravura";
+  src: url("https://cdn.jsdelivr.net/npm/@vexflow-fonts/bravura/bravura.woff2")
+    format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Academico";
+  src: url("https://cdn.jsdelivr.net/npm/@vexflow-fonts/academico/academico.woff2")
+    format("woff2");
+  font-display: swap;
+}
+
+/* Warm up Academico / Bravura so VexFlow text aligns with web fonts */
+body::before {
+  content: "";
+  font-family: "Bravura", "Academico", system-ui;
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -8,8 +33,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-ibm-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  /* Pulls Next.js-injected --font-kalnia from <html> for display titles */
+  --font-heading: var(--font-kalnia), ui-serif, Georgia, "Times New Roman", serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +48,4 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
