@@ -1,4 +1,4 @@
-# No Unpleasant Notes
+# NO UNPLEASANT NOTES
 
 A small **music listening lab**, not a drill app: random patterns on a **grand staff** (treble + bass), rendered with **VexFlow** and played with **Tone.js**. Optional **modern house-style** groove shares the transport clock with the phrase so what you see and hear stay aligned.
 

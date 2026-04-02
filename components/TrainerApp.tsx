@@ -679,7 +679,7 @@ export default function TrainerApp() {
           Groove alchemy · 2/4 · 4/4
         </p>
         <h1 className="font-heading text-4xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl">
-          No Unpleasant Notes
+          NO UNPLEASANT NOTES
         </h1>
         <p className="w-full max-w-none text-base font-normal leading-relaxed text-zinc-600 dark:text-zinc-400">
           Random patterns on a grand staff—dense arps, singles, chords—plus an

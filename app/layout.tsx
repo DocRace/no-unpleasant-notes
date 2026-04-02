@@ -17,7 +17,7 @@ const ibmPlexSans = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "No Unpleasant Notes — Groove alchemy on a grand staff",
+  title: "NO UNPLEASANT NOTES — Groove alchemy on a grand staff",
   description:
     "A small music lab: random arpeggios and chords on treble & bass staves, with an optional modern house four-on-the-four groove. Listen, don't drill.",
   icons: {
