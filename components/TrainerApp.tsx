@@ -725,11 +725,11 @@ export default function TrainerApp() {
         )}
       </div>
 
-      <div className="flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+      <div className="flex w-full min-w-0 flex-row flex-nowrap items-center justify-start gap-2 sm:gap-3 md:gap-4">
         <button
           type="button"
           onClick={handleNew}
-          className="inline-flex w-[140px] shrink-0 items-center justify-center gap-2 rounded-full bg-zinc-900 px-6 py-3.5 text-base font-medium text-white shadow-md transition hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white"
+          className="inline-flex min-h-[3.25rem] min-w-0 flex-1 basis-0 max-w-[140px] items-center justify-center gap-2 rounded-full bg-zinc-900 px-4 py-3.5 text-base font-medium text-white shadow-md transition hover:bg-zinc-800 sm:px-6 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white"
         >
           <IconAdd className="size-5 shrink-0" />
           New
@@ -741,7 +741,7 @@ export default function TrainerApp() {
             else void handlePlay();
           }}
           disabled={!phrase}
-          className={`inline-flex w-[140px] shrink-0 items-center justify-center gap-2 rounded-full px-6 py-3.5 text-base font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-40 border ${
+          className={`inline-flex min-h-[3.25rem] min-w-0 flex-1 basis-0 max-w-[140px] items-center justify-center gap-2 rounded-full px-4 py-3.5 text-base font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-40 sm:px-6 border ${
             isPlaying
               ? "border-rose-400/90 bg-rose-50 text-rose-900 shadow-sm hover:bg-rose-100 focus-visible:ring-rose-500 dark:border-rose-800 dark:bg-rose-950/55 dark:text-rose-100 dark:hover:bg-rose-900/75 dark:focus-visible:ring-rose-400 dark:focus-visible:ring-offset-zinc-950"
               : "border-zinc-300 bg-white text-zinc-900 hover:bg-zinc-100 focus-visible:ring-black dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-100 dark:focus-visible:ring-offset-zinc-950"
