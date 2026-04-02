@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { Phrase } from "@/lib/phrase";
 import { BEATS_PER_BAR, PHRASE_BPM, randomPhrase } from "@/lib/phrase";
+import { CircleCheckbox } from "@/components/CircleCheckbox";
 import { IconAdd, IconOpenInNew, IconPlay, IconStop } from "@/components/icons";
 import * as Tone from "tone";
 
@@ -429,7 +430,6 @@ export default function TrainerApp() {
         await Tone.start();
         ensureMelody();
         melodyGainRef.current?.gain.rampTo(1, 0.02);
-        Tone.Transport.bpm.value = loopBpmRef.current;
         if (Tone.Transport.state !== "started") {
           Tone.Transport.start();
         }
@@ -459,10 +459,10 @@ export default function TrainerApp() {
 
     const p0 = phraseRef.current;
     if (!p0) return;
-    void playPhraseWallClock(p0, loopBpm);
+    void playPhraseWallClock(p0, loopBpmRef.current);
     const ms = Math.max(
       120,
-      Math.round(((BEATS_PER_BAR * 60) / loopBpm) * 1000)
+      Math.round(((BEATS_PER_BAR * 60) / loopBpmRef.current) * 1000)
     );
     loopTimerRef.current = setInterval(() => {
       const p = phraseRef.current;
@@ -478,13 +478,27 @@ export default function TrainerApp() {
     isPlaying,
     quickLoop,
     grooveOn,
-    loopBpm,
     ensureMelody,
     playPhraseAtTime,
     playPhraseWallClock,
     phrase?.trebleScoreLine,
     phrase?.bassScoreLine,
   ]);
+
+  /** Wall-clock loop only: refresh interval when BPM changes (avoid resetting Transport repeat). */
+  useEffect(() => {
+    if (!isPlaying || !quickLoop || grooveOn) return;
+    if (loopTimerRef.current == null) return;
+    clearInterval(loopTimerRef.current);
+    const ms = Math.max(
+      120,
+      Math.round(((BEATS_PER_BAR * 60) / loopBpm) * 1000)
+    );
+    loopTimerRef.current = setInterval(() => {
+      const p = phraseRef.current;
+      if (p) void playPhraseWallClock(p, loopBpmRef.current);
+    }, ms);
+  }, [loopBpm, isPlaying, quickLoop, grooveOn, playPhraseWallClock]);
 
   useEffect(() => {
     if (!grooveOn) {
@@ -582,7 +596,6 @@ export default function TrainerApp() {
       const hat = hatRef.current;
 
       seqRef.current?.dispose();
-      Tone.Transport.bpm.value = loopBpm;
 
       /* Classic modern house: four-on-the-floor kick; snare/clap on 2 & 4; 16th hats with offbeat lift. */
       const steps = 16;
@@ -632,7 +645,7 @@ export default function TrainerApp() {
       seqRef.current?.dispose();
       seqRef.current = null;
     };
-  }, [grooveOn, loopBpm, isPlaying]);
+  }, [grooveOn, isPlaying]);
 
   useEffect(() => {
     return () => {
@@ -766,9 +779,7 @@ export default function TrainerApp() {
           Bar loop
         </h2>
         <label className="flex w-full cursor-pointer items-start gap-3 text-sm font-normal text-zinc-700 dark:text-zinc-300">
-          <input
-            type="checkbox"
-            className="mt-0.5 size-4 shrink-0 rounded border-zinc-400 accent-black dark:accent-zinc-100"
+          <CircleCheckbox
             checked={quickLoop}
             onChange={(e) => setQuickLoop(e.target.checked)}
           />
@@ -800,9 +811,7 @@ export default function TrainerApp() {
           4/4 groove
         </h2>
         <label className="flex w-full cursor-pointer items-start gap-3 text-sm font-normal text-zinc-700 dark:text-zinc-300">
-          <input
-            type="checkbox"
-            className="mt-0.5 size-4 shrink-0 rounded border-zinc-400 accent-black dark:accent-zinc-100"
+          <CircleCheckbox
             checked={grooveOn}
             onChange={(e) => setGrooveOn(e.target.checked)}
           />
@@ -844,7 +853,17 @@ export default function TrainerApp() {
           Ref
         </p>
         <p className="mt-3 w-full max-w-none text-sm font-normal leading-relaxed text-zinc-600 dark:text-zinc-400">
-          Vibe cue—short that nailed the arp mood:
+          Vibe cue—this demo takes inspiration from{" "}
+          <a
+            href="https://www.youtube.com/@CHAYsounds"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-zinc-800 underline decoration-zinc-300 underline-offset-4 transition hover:text-zinc-950 hover:decoration-zinc-600 dark:text-zinc-200 dark:decoration-zinc-600 dark:hover:text-zinc-50 dark:hover:decoration-zinc-400"
+          >
+            @CHAYsounds
+          </a>
+          ; the link below is their YouTube Short that nailed the arpeggio
+          mood.
         </p>
         <p className="mt-3 w-full">
           <a
@@ -854,7 +873,7 @@ export default function TrainerApp() {
             className="inline-flex items-center gap-0.5 text-sm font-medium text-zinc-900 transition hover:text-zinc-700 dark:text-zinc-100 dark:hover:text-zinc-300"
           >
             <span className="underline decoration-zinc-300 underline-offset-4 transition hover:decoration-zinc-600 dark:decoration-zinc-600 dark:hover:decoration-zinc-400">
-              YouTube Short
+              CHAYsounds — YouTube Short
             </span>
             <IconOpenInNew className="size-[0.95rem] shrink-0 translate-y-px text-zinc-600 dark:text-zinc-400" />
           </a>
